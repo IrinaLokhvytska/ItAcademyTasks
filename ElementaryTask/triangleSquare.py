@@ -90,4 +90,5 @@ while add_triangle:
         except:
             print (result)
         else:
+            add_triangle = False
             print(a)
