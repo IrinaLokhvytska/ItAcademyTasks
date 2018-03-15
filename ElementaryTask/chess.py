@@ -7,7 +7,7 @@ class Chess:
         self.height = height
         self.char = char
 
-    def __showChess(self):
+    def __show_chess(self):
         '''Print the chess board '''
         i = 0
         output = ''
@@ -30,19 +30,19 @@ class Chess:
             'height': self.height,
             'char': self.char
             }
-        validation = self.__checkChessValue(chess)
+        validation = self.__check_chess_value(chess)
         if validation['valid'] == 5:
-            return self.__showChess()
+            return self.__show_chess()
         else:
             return validation['msg']
 
-    def __checkChessValue(self, chess):
+    def __check_chess_value(self, chess):
         valid = 0
         msg = ''
         for key, value in chess.items():
-            if self.__checkEmptyValue(value):
+            if self.__check_empty_value(value):
                 if key != 'char':
-                    if self.__checkPositiveNumbers(value):
+                    if self.__check_positive_numbers(value):
                         valid += 1
                     else:
                         msg += 'The ' + key + ' is not a positive integer: '
@@ -53,14 +53,14 @@ class Chess:
         output = {'valid': valid, 'msg': msg}
         return output
 
-    def __checkEmptyValue(self, value):
+    def __check_empty_value(self, value):
         '''Check that input value isn't empty'''
         validation = False
         if value:
             validation = True
         return validation
 
-    def __checkPositiveNumbers(self, value):
+    def __check_positive_numbers(self, value):
         '''Check that input value can be converted to integer'''
         validation = False
         try:
