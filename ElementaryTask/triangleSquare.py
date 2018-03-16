@@ -78,9 +78,13 @@ result = list()
 def sort_by_square_key(result):
     return result['square']
 while add_triangle:
-    name, side1, side2, side3 = input('Enter the name and sides of the triangle: ').split(',')
-    triangle = TriangleSquare(name, side1, side2, side3)
-    result.append(triangle.validation())
+    try:
+        name, side1, side2, side3 = input('Enter the name and sides of the triangle: ').split(',')
+        triangle = TriangleSquare(name, side1, side2, side3)
+        result.append(triangle.validation())
+    except Exception as e:
+        print(e)
+        break
     answer = input('Do you want to add more triangle? ').strip().upper()
     if answer == 'Y' or answer == 'YES':
         continue
