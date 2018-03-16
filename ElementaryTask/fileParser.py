@@ -7,10 +7,13 @@ class CountStrInText():
         self.count_str = count_str
 
     def __count_str(self):
-        with open(self.path, 'r') as file:
-            content = file.read().split()
-            n_str = content.count(self.count_str.strip())
-        return n_str
+        try:
+            with open(self.path, 'r') as file:
+                content = file.read().split()
+                n_str = content.count(self.count_str.strip())
+            return n_str
+        except Exception as e:
+            return e
 
     def validation(self):
         param = {
@@ -64,15 +67,18 @@ class ReplaceStrInText():
 
     def __replace_str(self):
         new_content = ''
-        with open(self.path, 'r') as file:
-            content = file.read().split()
-            for word in content:
-                if word == self.search_str.strip():
-                    new_content += self.replace_str.strip() + ' '
-                else:
-                    new_content += word + ' '
-            with open(self.path, 'w') as wfile:
-                wfile.write(new_content)
+        try:
+            with open(self.path, 'r') as file:
+                content = file.read().split()
+                for word in content:
+                    if word == self.search_str.strip():
+                        new_content += self.replace_str.strip() + ' '
+                    else:
+                        new_content += word + ' '
+                with open(self.path, 'w') as wfile:
+                    wfile.write(new_content)
+        except Exception as e:
+            print(e)
 
     def validation(self):
         param = {
@@ -118,8 +124,18 @@ class ReplaceStrInText():
         else:
             return True
 
-path, count_str = input('Enter the file and str to count', ).split()
-path2, search_str, replace_str = input('Enter the file and strs to replace', ).split()
-count_str = CountStrInText(path, count_str)
-replace_str = ReplaceStrInText(path2, search_str, replace_str)
-print(count_str.validation())
+try:
+    path, count_str = input('Enter the file and str to count', ).split()
+except Exception as e:
+    print(e)
+else:
+    count_str = CountStrInText(path, count_str)
+    print(count_str.validation())
+
+try:
+    path2, search_str, replace_str = input('Enter the file and strs to replace', ).split()
+except Exception as e:
+    print(e)
+else:
+    replace_str = ReplaceStrInText(path2, search_str, replace_str)
+    replace_str.validation()
