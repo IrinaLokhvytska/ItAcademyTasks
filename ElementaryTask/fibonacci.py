@@ -66,6 +66,10 @@ class FibonacciNumbers:
             validation = True
         return validation
 
-min, max = input('Enter the min, max value: ').split(',')
-fibonacci = FibonacciNumbers(min, max)
-print(fibonacci.validation())
+try:
+    min, max = input('Enter the min, max value: ').split(',')
+except Exception as e:
+    print(e)
+else:
+    fibonacci = FibonacciNumbers(min, max)
+    print(fibonacci.validation())
