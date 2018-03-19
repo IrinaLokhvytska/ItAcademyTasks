@@ -114,7 +114,7 @@ class NumberConverter:
         return self.dict_numbers[int(n)][0]
 
     def __get_from_ten_to_twenty(self, n):
-        n = str(int(n)
+        n = str(int(n))
         first, second = map(int, n)
         return self.dict_numbers[first][1][second]
 
