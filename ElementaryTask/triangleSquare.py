@@ -2,19 +2,19 @@
 import math
 
 
-class TriangleSquare:
+class Triangle:
     def __init__(self, name, side1, side2, side3):
         self.name = name
         self.side1 = side1
         self.side2 = side2
         self.side3 = side3
 
-    def __get_square(self):
+    def get_square(self):
         '''Get square of the triangle'''
         side1, side2, side3 = map(float, (self.side1, self.side2, self.side3))
         p = 0.5*(side1 + side2 + side3)
         square = math.sqrt((p*(p-side1)*(p-side2)*(p-side3)))
-        return {'name': name,  'square': square}
+        return {'name': self.name,  'square': round(square, 2)}
 
     def __check_that_triangle_exists(self):
         '''Check side of the triangle for existence'''
@@ -24,17 +24,25 @@ class TriangleSquare:
             exist = True
         return exist
 
-    def validation(self):
+    def is_valid(self):
+        valid = self.__validation()
+        if valid[0]:
+            return True
+        else:
+            print(valid[1])
+
+    def __validation(self):
         '''Validate values'''
-        triangle = {'name': name, 'side1': side1, 'side2': side2, 'side3': side3}
+        triangle = {'name': self.name, 'side1': self.side1, 'side2': self.side2, 'side3': self.side3}
         validation = self.__check_triangle_values(triangle)
         if validation['valid'] == 7:
             if self.__check_that_triangle_exists():
-                return self.__get_square()
+                return True, ''
             else:
-                return 'The triangle ' + name + ' does not exist'
+                msg = 'The triangle ' + self.name + ' does not exist'
+                return False, msg
         else:
-            return validation['msg']
+            return False, validation['msg']
 
     def __check_triangle_values(self, triangle):
         valid = 0
@@ -71,28 +79,43 @@ class TriangleSquare:
             validation = True
         return validation
 
+
+class TriangleFactory:
+    triangles = list()
+    squares = list()
+
+    def add_triangle(self, name, side1, side2, side3):
+        triangle = Triangle(name, side1, side2, side3)
+        if triangle.is_valid():
+            self.triangles.append(triangle)
+
+    def __calculate_squares(self):
+        for triangle in self.triangles:
+            self.squares.append(triangle.get_square())
+
+    def __sort_squares(self):
+        self.__calculate_squares()
+        return sorted(self.squares, key=lambda x: x['square'], reverse=True)
+
+    def show_result(self):
+        output = 'Triangles list'.center(30, '=') + '\n'
+        triangle_squares = self.__sort_squares()
+        for triangle in triangle_squares:
+            output += 'Triangle [{}]: {} cm'.format(triangle['name'], triangle['square']) + '\n'
+        return output
+
 add_triangle = True
-result = list()
-
-
-def sort_by_square_key(result):
-    return result['square']
+triangle_factory = TriangleFactory()
 while add_triangle:
     try:
         name, side1, side2, side3 = input('Enter the name and sides of the triangle: ').split(',')
-        triangle = TriangleSquare(name, side1, side2, side3)
-        result.append(triangle.validation())
     except Exception as e:
         print(e)
-        break
+    else:
+        triangle_factory.add_triangle(name, side1, side2, side3)
     answer = input('Do you want to add more triangle? ').strip().upper()
     if answer == 'Y' or answer == 'YES':
         continue
     else:
-        try:
-            a = sorted(result, key=sort_by_square_key)
-        except:
-            print (result)
-        else:
-            add_triangle = False
-            print(a)
+        print(triangle_factory.show_result())
+        add_triangle = False
