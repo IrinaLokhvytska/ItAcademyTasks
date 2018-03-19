@@ -179,7 +179,7 @@ class NumberConverter:
             else:
                 output += self.__add_clarification(i, length)
                 length -= 1
-        return output
+        return output.replace('  ', ' ')
 
     def __add_clarification(self, n, l):
         output = ''
@@ -207,11 +207,12 @@ class NumberConverter:
 
     def __check_end_of_string(self, n, l):
         ends = {'один': '', 'два': 'а', 'три': 'а', 'четыре': 'а'}
-        simple_number = n.split(' ')[-1:][0]
+        simple_number = n.split(' ')
+        index = len(simple_number) - 1
         for k in ends:
-            if re.fullmatch(k, simple_number):
+            if re.fullmatch(k, simple_number[index]):
                 return self.number_clarification[l] + ends[k]
-            return self.number_clarification[l] + 'ов'
+        return self.number_clarification[l] + 'ов'
 
     def validation(self):
         msg = ''
