@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 ''' Convert number to string '''
+import re
 
 
 class NumberConverter:
@@ -53,7 +54,8 @@ class NumberConverter:
         30: 'октовигинтиллион',
         31: 'новемвигинтиллион',
         32: 'тригинтиллион',
-        33: 'антригинтиллион'
+        33: 'антригинтиллион',
+        34: 'гугол'
     }
 
     def __complete_dictionary(self):
@@ -116,6 +118,7 @@ class NumberConverter:
         return self.dict_numbers[first][1][second]
 
     def __get_dozen_dict(self, n):
+        n = str(int(n))
         first, second = map(int, n)
         if first and second != 0:
             return self.dict_numbers[first][1] + ' ' + self.dict_numbers[second][0]
@@ -165,7 +168,7 @@ class NumberConverter:
     def __show_result(self):
         numbers = self.__split_number()
         length = int(len(numbers))
-        if length > 33:
+        if length > 34:
             return 'The number ' + self.number + ' too big'
         output = ''
         for i in numbers:
@@ -189,20 +192,23 @@ class NumberConverter:
 
     def __check_end_of_thousand(self, n, l):
         ends = {
-          'один': ('а', 'одна', 4),
-          'два': ('и', 'две', 3),
-          'три': ('и', 'три', 3),
-          'четыре': ('и', 'четыре', 6)
+          'один': ('а', 'одна'),
+          'два': ('и', 'две'),
+          'три': ('и', 'три'),
+          'четыре': ('и', 'четыре')
         }
+        simple_number = n.split(' ')
+        index = len(simple_number) - 1
         for k in ends:
-            if k in n.split(' ')[-1:][0]:
-                return n[:-ends[k][2]] + ends[k][1] + ' ' + self.number_clarification[l] + ends[k][0]
+            if re.fullmatch(k, simple_number[index]):
+                return re.sub(k, ends[k][1], n) + ' ' + self.number_clarification[l] + ends[k][0]
         return n + ' ' + self.number_clarification[l]
 
     def __check_end_of_string(self, n, l):
         ends = {'один': '', 'два': 'а', 'три': 'а', 'четыре': 'а'}
+        simple_number = n.split(' ')[-1:][0]
         for k in ends:
-            if k in n.split(' ')[-1:][0]:
+            if re.fullmatch(k, simple_number):
                 return self.number_clarification[l] + ends[k]
             return self.number_clarification[l] + 'ов'
 
@@ -238,4 +244,3 @@ class NumberConverter:
 number = input('Enter the number to convert', )
 number_converter = NumberConverter(number)
 print(number_converter.validation())
-
