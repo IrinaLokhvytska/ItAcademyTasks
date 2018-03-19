@@ -75,8 +75,11 @@ class ReplaceStrInText():
                         new_content += self.replace_str.strip() + ' '
                     else:
                         new_content += word + ' '
-                with open(self.path, 'w') as wfile:
-                    wfile.write(new_content)
+        except Exception as e:
+            print(e)
+        try:
+            with open(self.path, 'w') as file:
+                file.write(new_content)
         except Exception as e:
             print(e)
 
