@@ -122,17 +122,16 @@ class ReadMethodFromFile():
 
     def __read_method(self):
         try:
-            open(self.path, 'r')
+            with open(self.path, 'r') as file:
+                content = file.read().split()
+                if 'Moskow' in content:
+                    return 'Moskow'
+                elif 'Piter' in content:
+                    return 'Piter'
+                else:
+                    return 'The path of file does not contain method'
         except:
             return 'The path is not correct'
-        with open(self.path, 'r') as file:
-            content = file.read().split()
-            if 'Moskow' in content:
-                return 'Moskow'
-            elif 'Piter' in content:
-                return 'Piter'
-            else:
-                return 'The path of file does not contain method'
 
     def __check_empty_value(self):
         '''Check that input value isn't empty'''
@@ -172,4 +171,3 @@ else:
     max = input('Enter the max value: ')
     lucky_tickets = LuckyTickets(min, max, method)
     print(lucky_tickets.validation())
-
