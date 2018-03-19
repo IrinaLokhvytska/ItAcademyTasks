@@ -69,7 +69,7 @@ class FibonacciNumbers:
 try:
     min, max = input('Enter the min, max value: ').split(',')
 except Exception as e:
-    print(e)
+    print(e, 'Enter the min, max value separated by commas')
 else:
     fibonacci = FibonacciNumbers(min, max)
     print(fibonacci.validation())
