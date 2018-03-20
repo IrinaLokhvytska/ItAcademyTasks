@@ -122,7 +122,9 @@ class NumberConverter:
         n = str(int(n))
         first, second = map(int, n)
         if first and second != 0:
-            return self.dict_numbers[first][1] + ' ' + self.dict_numbers[second][0]
+            result = self.dict_numbers[first][1]
+            result += ' ' + self.dict_numbers[second][0]
+            return result
         else:
             return self.dict_numbers[first][1]
 
@@ -138,7 +140,9 @@ class NumberConverter:
         return ''
 
     def __get_hundread_dict(self, n):
-        return self.dict_numbers[int(n[0])][2] + ' ' + self.__get_dozen_number(n[1:])
+        result = self.dict_numbers[int(n[0])][2]
+        result += ' ' + self.__get_dozen_number(n[1:])
+        return result
 
     def __get_hundred_number(self, n):
         num_range = {
@@ -181,17 +185,17 @@ class NumberConverter:
                 length -= 1
         return output.replace('  ', ' ')
 
-    def __add_clarification(self, n, l):
+    def __add_clarification(self, n, length):
         output = ''
-        if l == 2:
-            output += self.__check_end_of_thousand(n, l) + ' '
-        elif l > 2:
-            output += n + ' ' + self.__check_end_of_string(n, l) + ' '
+        if length == 2:
+            output += self.__check_end_of_thousand(n, length) + ' '
+        elif length > 2:
+            output += n + ' ' + self.__check_end_of_string(n, length) + ' '
         else:
             output += n
         return output
 
-    def __check_end_of_thousand(self, n, l):
+    def __check_end_of_thousand(self, n, length):
         ends = {
           'один': ('а', 'одна'),
           'два': ('и', 'две'),
@@ -202,17 +206,19 @@ class NumberConverter:
         index = len(simple_number) - 1
         for k in ends:
             if re.fullmatch(k, simple_number[index]):
-                return re.sub(k, ends[k][1], n) + ' ' + self.number_clarification[l] + ends[k][0]
-        return n + ' ' + self.number_clarification[l]
+                result = re.sub(k, ends[k][1], n) + ' '
+                result += self.number_clarification[length] + ends[k][0]
+                return result
+        return n + ' ' + self.number_clarification[length]
 
-    def __check_end_of_string(self, n, l):
+    def __check_end_of_string(self, n, length):
         ends = {'один': '', 'два': 'а', 'три': 'а', 'четыре': 'а'}
         simple_number = n.split(' ')
         index = len(simple_number) - 1
         for k in ends:
             if re.fullmatch(k, simple_number[index]):
-                return self.number_clarification[l] + ends[k]
-        return self.number_clarification[l] + 'ов'
+                return self.number_clarification[length] + ends[k]
+        return self.number_clarification[length] + 'ов'
 
     def validation(self):
         msg = ''
