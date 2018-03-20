@@ -22,7 +22,7 @@ class NumberRange:
             else:
                 msg += 'The ' + self.number + ' is not positive integer \n'
         else:
-            msg += 'The ' + self.number + ' can not be empty \n'
+            msg += 'The number can not be empty \n'
         return msg
 
     def __check_empty_value(self):
@@ -39,7 +39,7 @@ class NumberRange:
             int(self.number)
         except ValueError:
             return validation
-        if int(self.number) > 0:
+        if int(self.number) >= 0:
             validation = True
         return validation
 
