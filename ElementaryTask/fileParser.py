@@ -62,8 +62,11 @@ class ReplaceStrInText(RemovePunctuation):
                         new_content += ' '
                     else:
                         new_content += word + ' '
+                self.__wtite_to_file(new_content)
         except Exception as e:
             print(e)
+
+    def __wtite_to_file(self, new_content):
         try:
             with open(self.path, 'w') as file:
                 file.write(new_content)
