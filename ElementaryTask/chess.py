@@ -11,9 +11,10 @@ class Chess:
         '''Print the chess board '''
         i = 0
         output = ''
-        while i < int(self.height):
+        width, height = map(int, (self.width, self.height))
+        while i < height:
             j = 0
-            while j < int(self.width):
+            while j < width:
                 if i % 2 == 0:
                     output += (self.char + ' ')
                 else:
@@ -50,8 +51,7 @@ class Chess:
                 valid += 1
             else:
                 msg += 'The ' + key + ' of the chess can not be empty \n'
-        output = {'valid': valid, 'msg': msg}
-        return output
+        return {'valid': valid, 'msg': msg}
 
     def __check_empty_value(self, value):
         '''Check that input value isn't empty'''
