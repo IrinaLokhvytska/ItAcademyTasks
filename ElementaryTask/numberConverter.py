@@ -228,7 +228,7 @@ class NumberConverter:
             else:
                 msg += 'The ' + self.number + ' is not positive integer \n'
         else:
-            msg += 'The ' + self.number + ' can not be empty \n'
+            msg += 'The number can not be empty \n'
         return msg
 
     def __check_empty_value(self):
