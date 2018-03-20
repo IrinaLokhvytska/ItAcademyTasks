@@ -2,7 +2,30 @@
 import re
 
 
-class CountStrInText():
+class RemovePunctuation:
+    punctuation_marks = (
+          '.',
+          ',',
+          '?',
+          '!',
+          ':',
+          ';',
+          '-',
+          '...',
+          '(',
+          ')',
+          '"',
+          '\''
+          )
+
+    def _remove_punctuation(self, word):
+        for mark in self.punctuation_marks:
+            if mark in word:
+                word = word.replace(mark, '')
+        return word
+
+
+class CountStrInText(RemovePunctuation):
     def __init__(self, path, count_str):
         self.path = path.strip()
         self.count_str = count_str.strip()
@@ -10,14 +33,18 @@ class CountStrInText():
     def count_str_method(self):
         try:
             with open(self.path, 'r') as file:
-                content = file.read()
-                search_str = re.findall(self.count_str, content)
-            return len(search_str)
+                content = file.read().split()
+                result = 0
+                for word in content:
+                    helper = self._remove_punctuation(word)
+                    if re.fullmatch(self.count_str, helper):
+                        result += 1
+            return result
         except Exception as e:
             return e
 
 
-class ReplaceStrInText():
+class ReplaceStrInText(RemovePunctuation):
     def __init__(self, path, search_str, replace_str):
         self.path = path.strip()
         self.search_str = search_str.strip()
@@ -27,8 +54,14 @@ class ReplaceStrInText():
         new_content = ''
         try:
             with open(self.path, 'r') as file:
-                content = file.read()
-                new_content = re.sub(self.search_str, self.replace_str, content)
+                content = file.read().split()
+                for word in content:
+                    helper = self._remove_punctuation(word)
+                    if re.fullmatch(self.search_str, helper):
+                        new_content += re.sub(helper, self.replace_str, word)
+                        new_content += ' '
+                    else:
+                        new_content += word + ' '
         except Exception as e:
             print(e)
         try:
@@ -38,17 +71,20 @@ class ReplaceStrInText():
             print(e)
 
 try:
-    path, count_str = input('Enter the file and str to count', ).split()
+    msg = 'Enter the path to the file and the string to count through a space'
+    path, count_str = input(msg, ).split()
 except Exception as e:
-    print(e, 'Enter the path to the file and the string to count through a space')
+    print(e, msg)
 else:
     count_str = CountStrInText(path, count_str)
     print(count_str.count_str_method())
 
 try:
-    path2, search_str, replace_str = input('Enter the file and strs to replace', ).split()
+    msg = 'Enter the path to the file, the search string '
+    msg += 'and the string to replace with a space'
+    path2, search_str, replace_str = input(msg, ).split()
 except Exception as e:
-    print(e, 'Enter the path to the file, the search string and the string to replace with a space')
+    print(e, msg)
 else:
     replace_str = ReplaceStrInText(path2, search_str, replace_str)
     replace_str.replace_str_method()
