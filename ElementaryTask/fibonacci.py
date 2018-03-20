@@ -30,7 +30,9 @@ class FibonacciNumbers:
             if int(self.max) > int(self.min):
                 return self.__fib()
             else:
-                return 'The min value: ' + self.min + ' can not be greater than max value: ' + self.max
+                msg = 'The min value: ' + self.min
+                msg += ' can not be greater than max value: ' + self.max
+                return msg
         else:
             return validation['msg']
 
@@ -66,10 +68,11 @@ class FibonacciNumbers:
             validation = True
         return validation
 
+msg = 'Enter the min, max value separated by commas'
 try:
-    min, max = input('Enter the min, max value: ').split(',')
+    min, max = input(msg, ).split(',')
 except Exception as e:
-    print(e, 'Enter the min, max value separated by commas')
+    print(e, msg)
 else:
     fibonacci = FibonacciNumbers(min, max)
     print(fibonacci.validation())
