@@ -94,7 +94,9 @@ class LuckyTickets:
             if int(self.max) > int(self.min):
                 return self.__lucky_tickets()
             else:
-                return 'The max value: ' + self.max + ' should be greater than min value: ' + self.min
+                msg = 'The max value: ' + self.max
+                msg += ' should be greater than min value: ' + self.min
+                return msg
         else:
             return validation['msg']
 
@@ -107,9 +109,11 @@ class LuckyTickets:
                     if self.__check_tickets_range(value):
                         valid += 1
                     else:
-                        msg += 'The ' + key + ' is not in range [0:1000000]: ' + value + '\n'
+                        msg += 'The ' + key + ' is not in range [0:1000000]: '
+                        msg += value + '\n'
                 else:
-                    msg += 'The ' + key + ' is not a positive integer: ' + value + '\n'
+                    msg += 'The ' + key + ' is not a positive integer: '
+                    msg += value + '\n'
             else:
                 msg += 'The ' + key + ' can not be empty \n'
         output = {'valid': valid, 'msg': msg}
