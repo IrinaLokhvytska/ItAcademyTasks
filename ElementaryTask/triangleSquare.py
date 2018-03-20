@@ -33,7 +33,12 @@ class Triangle:
 
     def __validation(self):
         '''Validate values'''
-        triangle = {'name': self.name, 'side1': self.side1, 'side2': self.side2, 'side3': self.side3}
+        triangle = {
+            'name': self.name,
+            'side1': self.side1,
+            'side2': self.side2,
+            'side3': self.side3
+            }
         validation = self.__check_triangle_values(triangle)
         if validation['valid'] == 7:
             if self.__check_that_triangle_exists():
@@ -53,8 +58,9 @@ class Triangle:
                     if self.__check_positive_numbers(value):
                         valid += 1
                     else:
-                        msg += 'The ' + key + ' of the triangle ' + triangle['name']
-                        msg += ' is not a positive integer: ' + value + '\n'
+                        msg += 'The ' + key + ' of ' + triangle['name']
+                        msg += ' is not a positive integer: '
+                        msg += value + '\n'
                 valid += 1
             else:
                 msg += 'The ' + key + ' of the triangle can not be empty \n'
@@ -101,16 +107,18 @@ class TriangleFactory:
         output = 'Triangles list'.center(30, '=') + '\n'
         triangle_squares = self.__sort_squares()
         for triangle in triangle_squares:
-            output += 'Triangle [{}]: {} cm'.format(triangle['name'], triangle['square']) + '\n'
+            output += 'Triangle [{}]: '.format(triangle['name'])
+            output += '{} cm'.format(triangle['square']) + '\n'
         return output
 
 add_triangle = True
 triangle_factory = TriangleFactory()
 while add_triangle:
+    msg = 'Enter the name and sides of the triangle separated by commas:'
     try:
-        name, side1, side2, side3 = input('Enter the name and sides of the triangle: ').split(',')
+        name, side1, side2, side3 = input(msg, ).split(',')
     except Exception as e:
-        print(e)
+        print(e, msg)
     else:
         triangle_factory.add_triangle(name, side1, side2, side3)
     answer = input('Do you want to add more triangle? ').strip().upper()
