@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 ''' Convert number to string '''
 import re
+import validation
 
 
 class NumberConverter:
@@ -170,7 +171,7 @@ class NumberConverter:
             n_without_zero = n_without_zero[slice_num:]
         return (res)
 
-    def __show_result(self):
+    def show_result(self):
         numbers = self.__split_number()
         length = int(len(numbers))
         if length > 34:
@@ -220,35 +221,19 @@ class NumberConverter:
                 return self.number_clarification[length] + ends[k]
         return self.number_clarification[length] + 'ов'
 
-    def validation(self):
-        msg = ''
-        if self.__check_empty_value():
-            if self.__check_positive_numbers():
-                return self.__show_result()
-            else:
-                msg += 'The ' + self.number + ' is not positive integer \n'
-        else:
-            msg += 'The number can not be empty \n'
-        return msg
 
-    def __check_empty_value(self):
-        '''Check that input value isn't empty'''
-        validation = False
-        if self.number:
-            validation = True
-        return validation
-
-    def __check_positive_numbers(self):
-        '''Check that input value can be converted to integer'''
-        validation = False
-        try:
-            int(self.number)
-        except ValueError:
-            return validation
-        if int(self.number) > 0:
-            validation = True
-        return validation
+def validate_number(number):
+    check_functions = {
+       validation.check_empty_value: 1,
+       validation.check_integer: 1,
+       validation.check_positive_number: 1
+    }
+    for function, expect in check_functions.items():
+        valid, msg = function({'number': number})
+        if valid != expect:
+            return msg
+    number_converter = NumberConverter(number)
+    return number_converter.show_result()
 
 number = input('Enter the number to convert', )
-number_converter = NumberConverter(number)
-print(number_converter.validation())
+print(validate_number(number))
