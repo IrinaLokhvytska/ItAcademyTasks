@@ -1,5 +1,6 @@
 '''Check that triangle exists and return its square'''
 import math
+import validation
 
 
 class Triangle:
@@ -16,75 +17,6 @@ class Triangle:
         square = math.sqrt((p*(p-side1)*(p-side2)*(p-side3)))
         return {'name': self.name,  'square': round(square, 2)}
 
-    def __check_that_triangle_exists(self):
-        '''Check side of the triangle for existence'''
-        exist = False
-        side1, side2, side3 = map(float, (self.side1, self.side2, self.side3))
-        if (side1 + side2 >= side3) and (side1 + side3 >= side2) and (side3 + side2 >= side1):
-            exist = True
-        return exist
-
-    def is_valid(self):
-        valid = self.__validation()
-        if valid[0]:
-            return True
-        else:
-            print(valid[1])
-
-    def __validation(self):
-        '''Validate values'''
-        triangle = {
-            'name': self.name,
-            'side1': self.side1,
-            'side2': self.side2,
-            'side3': self.side3
-            }
-        validation = self.__check_triangle_values(triangle)
-        if validation['valid'] == 7:
-            if self.__check_that_triangle_exists():
-                return True, ''
-            else:
-                msg = 'The triangle ' + self.name + ' does not exist'
-                return False, msg
-        else:
-            return False, validation['msg']
-
-    def __check_triangle_values(self, triangle):
-        valid = 0
-        msg = ''
-        for key, value in triangle.items():
-            if self.__check_empty_value(value):
-                if key != 'name':
-                    if self.__check_positive_numbers(value):
-                        valid += 1
-                    else:
-                        msg += 'The ' + key + ' of ' + triangle['name']
-                        msg += ' is not a positive integer: '
-                        msg += value + '\n'
-                valid += 1
-            else:
-                msg += 'The ' + key + ' of the triangle can not be empty \n'
-        output = {'valid': valid, 'msg': msg}
-        return output
-
-    def __check_empty_value(self, value):
-        '''Check that input value isn't empty'''
-        validation = False
-        if value:
-            validation = True
-        return validation
-
-    def __check_positive_numbers(self, value):
-        '''Check that input value can be converted to integer'''
-        validation = False
-        try:
-            float(value)
-        except ValueError:
-            return validation
-        if float(value) > 0:
-            validation = True
-        return validation
-
 
 class TriangleFactory:
     triangles = list()
@@ -92,8 +24,7 @@ class TriangleFactory:
 
     def add_triangle(self, name, side1, side2, side3):
         triangle = Triangle(name, side1, side2, side3)
-        if triangle.is_valid():
-            self.triangles.append(triangle)
+        self.triangles.append(triangle)
 
     def __calculate_squares(self):
         for triangle in self.triangles:
@@ -111,6 +42,43 @@ class TriangleFactory:
             output += '{} cm'.format(triangle['square']) + '\n'
         return output
 
+
+def check_that_triangle_exists(dict_value):
+    '''Check side of the triangle for existence'''
+    valid = 0
+    msg = ''
+    side1, side2, side3 = map(float, (dict_value['side1'], dict_value['side2'], dict_value['side3']))
+    if (side1 + side2 >= side3) and (side1 + side3 >= side2) and (side3 + side2 >= side1):
+        valid += 1
+    else:
+        msg += 'The triangle does not exist'
+    return valid, msg
+
+
+def check_triangle_value(name, side1, side2, side3):
+    triangle = {
+        'name': name,
+        'side1': side1,
+        'side2': side2,
+        'side3': side3
+        }
+    check_functions = {
+       validation.check_empty_value: 4,
+       validation.check_float: 3,
+       validation.check_number_more_zero: 3,
+       check_that_triangle_exists: 1
+    }
+    i = 0
+    for function, expect in check_functions.items():
+        if i == 1:
+            del triangle['name']
+        valid, msg = function(triangle)
+        if valid != expect:
+            print(msg)
+            return False
+        i += 1
+    return True
+
 add_triangle = True
 triangle_factory = TriangleFactory()
 while add_triangle:
@@ -120,7 +88,8 @@ while add_triangle:
     except Exception as e:
         print(e, msg)
     else:
-        triangle_factory.add_triangle(name, side1, side2, side3)
+        if check_triangle_value(name, side1, side2, side3):
+            triangle_factory.add_triangle(name, side1, side2, side3)
     answer = input('Do you want to add more triangle? ').strip().upper()
     if answer == 'Y' or answer == 'YES':
         continue
