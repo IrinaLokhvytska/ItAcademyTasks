@@ -1,4 +1,5 @@
 '''Get the lucky tickets by 2 ways'''
+import validation
 
 
 class LuckyTickets:
@@ -26,144 +27,94 @@ class LuckyTickets:
         result = 0
         while n <= int(self.max):
             first = second = 0
-            n = self.__addZero(n)
-            for i in list(n[:3]):
-                first += int(i)
-            for i in list(n[3:]):
-                second += int(i)
-            if (first == second):
+            ticket_num = self.__addZero(n)
+            number_list = list(map(int, list(ticket_num)))
+            first = sum(number_list[:3])
+            second = sum(number_list[3:])
+            if first == second:
                 result += 1
-            n = int(n) + 1
+            n = int(ticket_num) + 1
         return result
 
     def __piter_way(self):
         n = int(self.min)
         result = 0
         while n <= int(self.max):
-            n = self.__addZero(n)
-            arr = list(n)
-            result += self.__helper(arr)
-            n = int(n) + 1
+            ticket_num = self.__addZero(n)
+            number_list = list(map(int, list(ticket_num)))
+            result += self.__helper(number_list)
+            n = int(ticket_num) + 1
         return result
 
-    def __helper(self, arr):
-        result = odd = even = sum = 0
-        num_range = 0
-        for i in arr:
-            if num_range % 2 == 0:
-                even += int(i)
-            else:
-                odd += int(i)
+    def __helper(self, number_list):
+        result = odd = even = num_range = 0
+        numbers = [even, odd]
+        for i in number_list:
+            numbers[num_range % 2] += i
             num_range += 1
-        if odd == even:
+        if numbers[0] == numbers[1]:
             result = 1
         return result
 
-    def __lucky_tickets(self):
+    def lucky_tickets(self):
         if self.method == 'Moskow':
             return self.__moskow_way()
         else:
             return self.__piter_way()
 
-    def __check_empty_value(self, value):
-        '''Check that input value isn't empty'''
-        validation = False
-        if value:
-            validation = True
-        return validation
-
-    def __check_numbers(self, value):
-        '''Check that input value can be converted to integer'''
-        try:
-            int(value)
-        except ValueError:
-            return False
-        return True
-
-    def __check_tickets_range(self, value):
-        validation = False
-        if int(value) >= 0 and int(value) < 1000000:
-            validation = True
-        return validation
-
-    def validation(self):
-        '''Validate values'''
-        tickets = {'min': self.min, 'max': self.max}
-        validation = self.__check_tickets_values(tickets)
-        if validation['valid'] == 2:
-            if int(self.max) > int(self.min):
-                return self.__lucky_tickets()
-            else:
-                msg = 'The max value: ' + self.max
-                msg += ' should be greater than min value: ' + self.min
-                return msg
-        else:
-            return validation['msg']
-
-    def __check_tickets_values(self, tickets):
-        valid = 0
-        msg = ''
-        for key, value in tickets.items():
-            if self.__check_empty_value(value):
-                if self.__check_numbers(value):
-                    if self.__check_tickets_range(value):
-                        valid += 1
-                    else:
-                        msg += 'The ' + key + ' is not in range [0:1000000]: '
-                        msg += value + '\n'
-                else:
-                    msg += 'The ' + key + ' is not a positive integer: '
-                    msg += value + '\n'
-            else:
-                msg += 'The ' + key + ' can not be empty \n'
-        output = {'valid': valid, 'msg': msg}
-        return output
-
 
 class ReadMethodFromFile():
+    methods = ('Moskow', 'Piter')
+
     def __init__(self, path):
         self.path = path
 
     def __read_method(self):
         try:
             with open(self.path, 'r') as file:
-                content = file.read().split()
-                if 'Moskow' in content:
-                    return 'Moskow'
-                elif 'Piter' in content:
-                    return 'Piter'
-                else:
-                    return 'The path of file does not contain method'
+                content = file.read()
+                for method in self.methods:
+                    if method in content:
+                        return method
+                return 'The path of file does not contain method'
         except:
             return 'The path is not correct'
 
-    def __check_empty_value(self):
-        '''Check that input value isn't empty'''
-        if self.path:
-            return True
-        return False
-
-    def __check_str(self):
-        '''Check that input value can be converted to string'''
-        validation = False
-        try:
-            str(self.path)
-        except ValueError:
-            return validation
-        else:
-            return True
-
     def validation(self):
         msg = ''
-        if self.__check_empty_value():
-            if self.__check_str():
-                return self.__read_method()
-            else:
-                msg += 'The path' + self.path + 'should be a string'
+        if self.path:
+            return self.__read_method()
         else:
             msg += 'The path can not be empty'
         return msg
 
+
+def check_tickets_range(dict_value):
+    valid = 0
+    msg = ''
+    for key, value in dict_value.items():
+        if int(value) >= 0 and int(value) < 1000000:
+            valid += 1
+        else:
+            msg += 'The ' + key + ' is not in range [0:1000000]: '
+            msg += value + '\n'
+    return valid, msg
+
+
+def check_tickets_value(min, max, method):
+    tickets = {'min': min, 'max': max}
+    check_functions = {
+       validation.check_empty_value: 2,
+       validation.check_integer: 2,
+       validation.check_min_max_value: 1,
+       check_tickets_range: 2
+    }
+    for function, expect in check_functions.items():
+        valid, msg = function(tickets)
+        if valid != expect:
+            return msg
+    lucky_tickets = LuckyTickets(min, max, method)
+    return lucky_tickets.lucky_tickets()
 
 path = input('Enter the path to file with method: ')
 read_method = ReadMethodFromFile(path)
@@ -173,5 +124,4 @@ if 'The path' in method:
 else:
     min = input('Enter the min value: ')
     max = input('Enter the max value: ')
-    lucky_tickets = LuckyTickets(min, max, method)
-    print(lucky_tickets.validation())
+    print(check_tickets_value(min, max, method))
