@@ -1,4 +1,5 @@
 '''Get the lucky tickets by 2 ways'''
+import re
 import validation
 
 
@@ -67,14 +68,14 @@ class ReadMethodFromFile():
     methods = ('Moskow', 'Piter')
 
     def __init__(self, path):
-        self.path = path
+        self.path = path.strip()
 
     def __read_method(self):
         try:
             with open(self.path, 'r') as file:
-                content = file.read()
+                content = file.read().strip()
                 for method in self.methods:
-                    if method in content:
+                    if re.fullmatch(method, content):
                         return method
                 return 'The path of file does not contain method'
         except:
