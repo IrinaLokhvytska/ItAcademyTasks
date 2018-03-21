@@ -1,4 +1,5 @@
 '''Fibonacci Numbers'''
+import validation
 
 
 class FibonacciNumbers:
@@ -6,7 +7,7 @@ class FibonacciNumbers:
         self.min = min
         self.max = max
 
-    def __fib(self):
+    def fib(self):
         minRange = self.__min_fib()
         a, b = minRange[0], minRange[1]
         result = [a]
@@ -22,51 +23,21 @@ class FibonacciNumbers:
             a, b = b, a + b
         return (a, b)
 
-    def validation(self):
-        '''Validate values'''
-        fibonacci = {'min': self.min, 'max': self.max}
-        validation = self.__check_fibonacci_values(fibonacci)
-        if validation['valid'] == 2:
-            if int(self.max) > int(self.min):
-                return self.__fib()
-            else:
-                msg = 'The min value: ' + self.min
-                msg += ' can not be greater than max value: ' + self.max
-                return msg
-        else:
-            return validation['msg']
 
-    def __check_fibonacci_values(self, fibonacci):
-        valid = 0
-        msg = ''
-        for key, value in fibonacci.items():
-            if self.__check_empty_value(value):
-                if self.__check_positive_numbers(value):
-                    valid += 1
-                else:
-                    msg += key + ' is not a positive integer: ' + value + '\n'
-            else:
-                msg += key + ' can not be empty \n'
-        output = {'valid': valid, 'msg': msg}
-        return output
-
-    def __check_empty_value(self, value):
-        '''Check that input value isn't empty'''
-        validation = False
-        if value:
-            validation = True
-        return validation
-
-    def __check_positive_numbers(self, value):
-        '''Check that input value can be converted to integer'''
-        validation = False
-        try:
-            int(value)
-        except ValueError:
-            return validation
-        if int(value) > 0:
-            validation = True
-        return validation
+def check_fibonacci_value(min, max):
+    fibonacci = {'min': min, 'max': max}
+    check_functions = {
+       validation.check_empty_value: 2,
+       validation.check_integer: 2,
+       validation.check_number_more_zero: 2,
+       validation.check_min_max_value: 1
+    }
+    for function, expect in check_functions.items():
+        valid, msg = function(fibonacci)
+        if valid != expect:
+            return msg
+    fibonacci_class = FibonacciNumbers(min, max)
+    return fibonacci_class.fib()
 
 msg = 'Enter the min, max value separated by commas'
 try:
@@ -74,5 +45,4 @@ try:
 except Exception as e:
     print(e, msg)
 else:
-    fibonacci = FibonacciNumbers(min, max)
-    print(fibonacci.validation())
+    print(check_fibonacci_value(min, max))
