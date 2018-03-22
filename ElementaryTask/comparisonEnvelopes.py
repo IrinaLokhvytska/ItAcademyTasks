@@ -12,15 +12,11 @@ class ComparisonEnvelopes:
     def comparison_envelopes(self):
         msg = ''
         a, b, c, d = map(int, (self.a, self.b, self.c, self.d))
-        multi_check = lambda x, y, z, f: x*y > z*f
-        sum_check = lambda x, y, z, f: x + y > z + f
-        pow_check = lambda x, y, z, f: (x**2 + y**2) > (z**2 + f**2)
-        min_check = lambda x, y, z, f: min([x, y]) > min([z, f])
         check_methods = (
-            multi_check,
-            sum_check,
-            pow_check,
-            min_check
+            lambda x, y, z, f: x*y > z*f,
+            lambda x, y, z, f: x + y > z + f,
+            lambda x, y, z, f: (x**2 + y**2) > (z**2 + f**2),
+            lambda x, y, z, f: min([x, y]) > min([z, f])
           )
         result_first = []
         result_second = []
