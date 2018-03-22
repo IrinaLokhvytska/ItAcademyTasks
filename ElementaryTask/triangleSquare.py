@@ -47,8 +47,17 @@ def check_that_triangle_exists(dict_value):
     '''Check side of the triangle for existence'''
     valid = 0
     msg = ''
-    side1, side2, side3 = map(float, (dict_value['side1'], dict_value['side2'], dict_value['side3']))
-    if (side1 + side2 >= side3) and (side1 + side3 >= side2) and (side3 + side2 >= side1):
+    values = (dict_value['side1'], dict_value['side2'], dict_value['side3'])
+    side1, side2, side3 = map(float, values)
+    check_methods = (
+        lambda side1, side2, side3: side1 + side2 >= side3,
+        lambda side1, side2, side3: side1 + side3 >= side2,
+        lambda side1, side2, side3: side3 + side2 >= side1,
+        )
+    result = []
+    for method in check_methods:
+        result.append(method(side1, side2, side3))
+    if all(result):
         valid += 1
     else:
         msg += 'The triangle does not exist'
