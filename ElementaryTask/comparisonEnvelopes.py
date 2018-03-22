@@ -12,9 +12,24 @@ class ComparisonEnvelopes:
     def comparison_envelopes(self):
         msg = ''
         a, b, c, d = map(int, (self.a, self.b, self.c, self.d))
-        if (a*b > c*d) and ((a**2 + b**2) > (c**2 + d**2)) and (a + b > c + d) and (min([a, b]) > min([c, d])):
+        multi_check = lambda x, y, z, f: x*y > z*f
+        sum_check = lambda x, y, z, f: x + y > z + f
+        pow_check = lambda x, y, z, f: (x**2 + y**2) > (z**2 + f**2)
+        min_check = lambda x, y, z, f: min([x, y]) > min([z, f])
+        check_methods = (
+            multi_check,
+            sum_check,
+            pow_check,
+            min_check
+          )
+        result_first = []
+        result_second = []
+        for method in check_methods:
+            result_first.append(method(a, b, c, d))
+            result_second.append(method(c, d, a, b))
+        if all(result_first):
             msg = 'The second envelope is placed in the first.'
-        elif (c*d > a*b) and ((c**2 + d**2) > (a**2 + b**2)) and (c + d > a + b) and (min([c, d]) > min([a, b])):
+        elif all(result_second):
             msg = 'The first envelope is placed in the second.'
         else:
             msg = 'Envelopes can not be placed in each other.'
