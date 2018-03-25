@@ -4,19 +4,19 @@ import re
 
 class RemovePunctuation:
     punctuation_marks = (
-          '.',
-          ',',
-          '?',
-          '!',
-          ':',
-          ';',
-          '-',
-          '...',
-          '(',
-          ')',
-          '"',
-          '\''
-          )
+        '.',
+        ',',
+        '?',
+        '!',
+        ':',
+        ';',
+        '-',
+        '...',
+        '(',
+        ')',
+        '"',
+        '\''
+    )
 
     def _remove_punctuation(self, word):
         for mark in self.punctuation_marks:
@@ -73,21 +73,23 @@ class ReplaceStrInText(RemovePunctuation):
         except Exception as e:
             print(e)
 
-try:
-    msg = 'Enter the path to the file and the string to count through a space'
-    path, count_str = input(msg, ).split()
-except Exception as e:
-    print(e, msg)
-else:
-    count_str = CountStrInText(path, count_str)
-    print(count_str.count_str_method())
 
-try:
-    msg = 'Enter the path to the file, the search string '
-    msg += 'and the string to replace with a space'
-    path2, search_str, replace_str = input(msg, ).split()
-except Exception as e:
-    print(e, msg)
-else:
-    replace_str = ReplaceStrInText(path2, search_str, replace_str)
-    replace_str.replace_str_method()
+if __name__ == '__main__':
+    try:
+        msg = 'Enter the path to the file and the string to count through a space'
+        path, count_str = input(msg, ).split()
+    except Exception as e:
+        print(e, msg)
+    else:
+        count_str = CountStrInText(path, count_str)
+        print(count_str.count_str_method())
+
+    try:
+        msg = 'Enter the path to the file, the search string '
+        msg += 'and the string to replace with a space'
+        path2, search_str, replace_str = input(msg, ).split()
+    except Exception as e:
+        print(e, msg)
+    else:
+        replace_str = ReplaceStrInText(path2, search_str, replace_str)
+        replace_str.replace_str_method()

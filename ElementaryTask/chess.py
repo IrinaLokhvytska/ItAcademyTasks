@@ -46,7 +46,8 @@ def check_chess_value(width, height, char):
     chess_class = Chess(width, height, char)
     return chess_class.show_chess()
 
-width = input('Enter the width of the chess board: ')
-height = input('Enter the height of the chess board: ')
-char = input('Enter the char of the chess board: ')
-print(check_chess_value(width, height, char))
+if __name__ == '__main__':
+    width = input('Enter the width of the chess board: ')
+    height = input('Enter the height of the chess board: ')
+    char = input('Enter the char of the chess board: ')
+    print(check_chess_value(width, height, char))

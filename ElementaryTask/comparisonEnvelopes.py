@@ -51,15 +51,17 @@ def check_envelopes_value(a, b, c, d):
     comparison = ComparisonEnvelopes(a, b, c, d)
     return comparison.comparison_envelopes()
 
-continue_comparison = True
-while continue_comparison:
-    a = input('Enter the first side of the first envelope: ')
-    b = input('Enter the second side of the first envelope: ')
-    c = input('Enter the first side of the second envelope: ')
-    d = input('Enter the second side of the second envelope: ')
-    print(check_envelopes_value(a, b, c, d))
-    answer = input('Do you want to continue? ').strip().upper()
-    if answer == 'Y' or answer == 'YES':
-        continue
-    else:
-        continue_comparison = False
+
+if __name__ == '__main__':
+    continue_comparison = True
+    while continue_comparison:
+        a = input('Enter the first side of the first envelope: ')
+        b = input('Enter the second side of the first envelope: ')
+        c = input('Enter the first side of the second envelope: ')
+        d = input('Enter the second side of the second envelope: ')
+        print(check_envelopes_value(a, b, c, d))
+        answer = input('Do you want to continue? ').strip().upper()
+        if answer == 'Y' or answer == 'YES':
+            continue
+        else:
+            continue_comparison = False

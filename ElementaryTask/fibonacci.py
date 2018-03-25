@@ -39,10 +39,11 @@ def check_fibonacci_value(min, max):
     fibonacci_class = FibonacciNumbers(min, max)
     return fibonacci_class.fib()
 
-msg = 'Enter the min, max value separated by commas'
-try:
-    min, max = input(msg, ).split(',')
-except Exception as e:
-    print(e, msg)
-else:
-    print(check_fibonacci_value(min, max))
+if __name__ == '__main__':
+    msg = 'Enter the min, max value separated by commas'
+    try:
+        min, max = input(msg, ).split(',')
+    except Exception as e:
+        print(e, msg)
+    else:
+        print(check_fibonacci_value(min, max))
