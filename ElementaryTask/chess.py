@@ -1,5 +1,5 @@
 ''' Print the chess board'''
-import validation
+from ElementaryTask import validation
 
 
 class Chess:
@@ -25,11 +25,13 @@ class Chess:
 
 
 def check_chess_value(width, height, char):
+    '''Create dict with values and check them'''
     chess = {
         'width': width,
         'height': height,
         'char': char
         }
+    #Key - function, value - expected result
     check_functions = {
        validation.check_empty_value: 3,
        validation.check_integer: 2,

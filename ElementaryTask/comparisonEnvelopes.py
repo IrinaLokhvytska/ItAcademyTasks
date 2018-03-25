@@ -1,5 +1,5 @@
 '''Comparison Envelopes'''
-import validation
+from ElementaryTask import validation
 
 
 class ComparisonEnvelopes:
