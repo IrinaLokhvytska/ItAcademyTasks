@@ -1,6 +1,6 @@
 '''Check that triangle exists and return its square'''
 import math
-import validation
+from ElementaryTask import validation
 
 
 class Triangle:
@@ -88,20 +88,22 @@ def check_triangle_value(name, side1, side2, side3):
         i += 1
     return True
 
-add_triangle = True
-triangle_factory = TriangleFactory()
-while add_triangle:
-    msg = 'Enter the name and sides of the triangle separated by commas:'
-    try:
-        name, side1, side2, side3 = input(msg, ).split(',')
-    except Exception as e:
-        print(e, msg)
-    else:
-        if check_triangle_value(name, side1, side2, side3):
-            triangle_factory.add_triangle(name, side1, side2, side3)
-    answer = input('Do you want to add more triangle? ').strip().upper()
-    if answer == 'Y' or answer == 'YES':
-        continue
-    else:
-        print(triangle_factory.show_result())
-        add_triangle = False
+
+if __name__ == '__main__':
+    add_triangle = True
+    triangle_factory = TriangleFactory()
+    while add_triangle:
+        msg = 'Enter the name and sides of the triangle separated by commas:'
+        try:
+            name, side1, side2, side3 = input(msg, ).split(',')
+        except Exception as e:
+            print(e, msg)
+        else:
+            if check_triangle_value(name, side1, side2, side3):
+                triangle_factory.add_triangle(name, side1, side2, side3)
+            answer = input('Do you want to add more triangle? ').strip().upper()
+            if answer == 'Y' or answer == 'YES':
+                continue
+            else:
+                print(triangle_factory.show_result())
+                add_triangle = False

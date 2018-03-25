@@ -75,8 +75,8 @@ class ReplaceStrInText(RemovePunctuation):
 
 
 if __name__ == '__main__':
+    msg = 'Enter the path to the file and the string to count through a space'
     try:
-        msg = 'Enter the path to the file and the string to count through a space'
         path, count_str = input(msg, ).split()
     except Exception as e:
         print(e, msg)
@@ -84,9 +84,9 @@ if __name__ == '__main__':
         count_str = CountStrInText(path, count_str)
         print(count_str.count_str_method())
 
+    msg = 'Enter the path to the file, the search string '
+    msg += 'and the string to replace with a space'
     try:
-        msg = 'Enter the path to the file, the search string '
-        msg += 'and the string to replace with a space'
         path2, search_str, replace_str = input(msg, ).split()
     except Exception as e:
         print(e, msg)

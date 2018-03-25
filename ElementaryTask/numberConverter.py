@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ''' Convert number to string '''
 import re
-import validation
+from ElementaryTask import validation
 
 
 class NumberConverter:
@@ -235,5 +235,7 @@ def validate_number(number):
     number_converter = NumberConverter(number)
     return number_converter.show_result()
 
-number = input('Enter the number to convert', )
-print(validate_number(number))
+
+if __name__ == '__main__':
+    number = input('Enter the number to convert', )
+    print(validate_number(number))

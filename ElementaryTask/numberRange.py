@@ -1,6 +1,6 @@
 '''Print the list of numders, if sqrt of them less than input number'''
 import math
-import validation
+from ElementaryTask import validation
 
 
 class NumberRange:
@@ -29,5 +29,7 @@ def validate_number(number):
     number_range = NumberRange(number)
     return number_range.calculate_range()
 
-number = input('Enter the number: ')
-print(validate_number(number))
+
+if __name__ == '__main__':
+    number = input('Enter the number: ')
+    print(validate_number(number))

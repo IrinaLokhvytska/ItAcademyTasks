@@ -1,6 +1,6 @@
 '''Get the lucky tickets by 2 ways'''
 import re
-import validation
+from ElementaryTask import validation
 
 
 class LuckyTickets:
@@ -117,12 +117,14 @@ def check_tickets_value(min, max, method):
     lucky_tickets = LuckyTickets(min, max, method)
     return lucky_tickets.lucky_tickets()
 
-path = input('Enter the path to file with method: ')
-read_method = ReadMethodFromFile(path)
-method = read_method.validation()
-if 'The path' in method:
-    print(method)
-else:
-    min = input('Enter the min value: ')
-    max = input('Enter the max value: ')
-    print(check_tickets_value(min, max, method))
+
+if __name__ == '__main__':
+    path = input('Enter the path to file with method: ')
+    read_method = ReadMethodFromFile(path)
+    method = read_method.validation()
+    if 'The path' in method:
+        print(method)
+    else:
+        min = input('Enter the min value: ')
+        max = input('Enter the max value: ')
+        print(check_tickets_value(min, max, method))

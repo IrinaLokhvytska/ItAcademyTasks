@@ -1,5 +1,5 @@
 '''Fibonacci Numbers'''
-import validation
+from ElementaryTask import validation
 
 
 class FibonacciNumbers:
@@ -9,19 +9,19 @@ class FibonacciNumbers:
 
     def fib(self):
         minRange = self.__min_fib()
-        a, b = minRange[0], minRange[1]
-        result = [a]
-        while a < int(self.max):
-            a, b = b, a+b
-            result.append(a)
+        first, second = minRange[0], minRange[1]
+        result = [first]
+        while first < int(self.max):
+            first, second = second, first+second
+            result.append(first)
         result.pop()
         return result
 
     def __min_fib(self):
-        a, b = 0, 1
-        while a < int(self.min):
-            a, b = b, a + b
-        return (a, b)
+        first, second = 0, 1
+        while first < int(self.min):
+            first, second = second, first + second
+        return (first, second)
 
 
 def check_fibonacci_value(min, max):

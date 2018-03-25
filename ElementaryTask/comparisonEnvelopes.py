@@ -3,15 +3,14 @@ from ElementaryTask import validation
 
 
 class ComparisonEnvelopes:
-    def __init__(self, a, b, c, d):
-        self.a = a
-        self.b = b
-        self.c = c
-        self.d = d
+    def __init__(self, length_env1, width_env1, length_env2, width_env2):
+        self.length_env1 = length_env1
+        self.width_env1 = width_env1
+        self.length_env2 = length_env2
+        self.width_env2 = width_env2
 
     def comparison_envelopes(self):
-        msg = ''
-        a, b, c, d = map(int, (self.a, self.b, self.c, self.d))
+        a, b, c, d = map(int, (self.length_env1, self.width_env1, self.length_env2, self.width_env2))
         check_methods = (
             lambda x, y, z, f: x*y > z*f,
             lambda x, y, z, f: x + y > z + f,
@@ -32,12 +31,12 @@ class ComparisonEnvelopes:
         return msg
 
 
-def check_envelopes_value(a, b, c, d):
+def check_envelopes_value(length_env1, width_env1, length_env2, width_env2):
     envelopes = {
-        'The first side of the first envelope': a,
-        'The second side of the first envelope': b,
-        'The first side of the second envelope': c,
-        'The second side of the second envelope': d
+        'first side of the first envelope': length_env1,
+        'second side of the first envelope': width_env1,
+        'first side of the second envelope': length_env2,
+        'second side of the second envelope': width_env2
     }
     check_functions = {
        validation.check_empty_value: 4,
@@ -48,18 +47,18 @@ def check_envelopes_value(a, b, c, d):
         valid, msg = function(envelopes)
         if valid != expect:
             return msg
-    comparison = ComparisonEnvelopes(a, b, c, d)
+    comparison = ComparisonEnvelopes(length_env1, width_env1, length_env2, width_env2)
     return comparison.comparison_envelopes()
 
 
 if __name__ == '__main__':
     continue_comparison = True
     while continue_comparison:
-        a = input('Enter the first side of the first envelope: ')
-        b = input('Enter the second side of the first envelope: ')
-        c = input('Enter the first side of the second envelope: ')
-        d = input('Enter the second side of the second envelope: ')
-        print(check_envelopes_value(a, b, c, d))
+        length_env1 = input('Enter the first side of the first envelope: ')
+        width_env1 = input('Enter the second side of the first envelope: ')
+        length_env2 = input('Enter the first side of the second envelope: ')
+        width_env2 = input('Enter the second side of the second envelope: ')
+        print(check_envelopes_value(length_env1, width_env1, length_env2, width_env2))
         answer = input('Do you want to continue? ').strip().upper()
         if answer == 'Y' or answer == 'YES':
             continue
