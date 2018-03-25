@@ -9,7 +9,8 @@ class LuckyTickets:
         self.max = max
         self.method = method
 
-    def __addZero(self, n):
+    @staticmethod
+    def addZero(n):
         ticketsRange = {
             '00000': [0, 10],
             '0000': [10, 100],
@@ -27,8 +28,7 @@ class LuckyTickets:
         n = int(self.min)
         result = 0
         while n <= int(self.max):
-            first = second = 0
-            ticket_num = self.__addZero(n)
+            ticket_num = self.addZero(n)
             number_list = list(map(int, list(ticket_num)))
             first = sum(number_list[:3])
             second = sum(number_list[3:])
@@ -41,7 +41,7 @@ class LuckyTickets:
         n = int(self.min)
         result = 0
         while n <= int(self.max):
-            ticket_num = self.__addZero(n)
+            ticket_num = self.addZero(n)
             number_list = list(map(int, list(ticket_num)))
             result += self.__helper(number_list)
             n = int(ticket_num) + 1
