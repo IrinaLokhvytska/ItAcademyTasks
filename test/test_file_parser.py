@@ -33,3 +33,7 @@ class TestFileParser(unittest.TestCase):
 
     def tearDown(self):
         os.remove('file_parser.txt')
+
+
+if __name__ == '__main__':
+    unittest.main()

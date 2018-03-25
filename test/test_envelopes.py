@@ -23,3 +23,7 @@ class TestComparisonEnvelopes(unittest.TestCase):
         expected = 'The first envelope is placed in the second.'
         result = comparisonEnvelopes.check_envelopes_value('10', '5', '20', '10')
         self.assertEqual(result, expected)
+
+
+if __name__ == '__main__':
+    unittest.main()

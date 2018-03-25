@@ -13,3 +13,7 @@ class TestFibonacciNumbers(unittest.TestCase):
         expected = [13, 21, 34, 55, 89, 144]
         result = fibonacci.check_fibonacci_value('10', '160')
         self.assertEqual(result, expected)
+
+
+if __name__ == '__main__':
+    unittest.main()

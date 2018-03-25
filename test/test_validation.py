@@ -80,3 +80,7 @@ class TestValidation(unittest.TestCase):
         expected = 0, msg
         result = validation.check_float(dict_value)
         self.assertEqual(result, expected)
+
+
+if __name__ == '__main__':
+    unittest.main()

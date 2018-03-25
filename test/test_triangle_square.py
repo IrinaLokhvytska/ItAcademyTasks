@@ -44,3 +44,7 @@ class TestTriangleSquare(unittest.TestCase):
         expected += 'Triangle [ABC]: 43.3 cm\n'
         result = triangle_factory.show_result()
         self.assertEqual(result, expected)
+
+
+if __name__ == '__main__':
+    unittest.main()

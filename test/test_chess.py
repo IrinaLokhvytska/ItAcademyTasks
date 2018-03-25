@@ -13,3 +13,7 @@ class TestChess(unittest.TestCase):
         expected += ' * * * * *\n'
         result = chess.check_chess_value('5', '2', '*')
         self.assertEqual(result, expected)
+
+
+if __name__ == '__main__':
+    unittest.main()

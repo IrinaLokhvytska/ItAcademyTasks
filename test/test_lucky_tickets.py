@@ -17,3 +17,7 @@ class TestLuckyTickets(unittest.TestCase):
         expected = 50413
         result = luckyTickets.check_tickets_value('0', '999999', 'Moskow')
         self.assertEqual(result, expected)
+
+
+if __name__ == '__main__':
+    unittest.main()
