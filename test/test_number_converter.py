@@ -68,4 +68,3 @@ class TestNumberConverter(unittest.TestCase):
         expected = 'The number ' + number + ' too big'
         result = numberConverter.validate_number(number)
         self.assertEqual(result, expected)
-
