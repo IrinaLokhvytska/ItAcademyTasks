@@ -1,3 +1,2 @@
 /.idea/
-/ElementaryTask/*
-!/ElementaryTask/*.py
+/ElementaryTask/__pycache__/
