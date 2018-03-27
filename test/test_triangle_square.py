@@ -43,7 +43,12 @@ class TestTriangleSquare(unittest.TestCase):
         expected = 'Triangles list'.center(30, '=') + '\n'
         expected += 'Triangle [ABC]: 43.3 cm\n'
         result = triangle_factory.show_result()
+        del triangle_factory
         self.assertEqual(result, expected)
+
+    def test_add_triangle(self):
+        triangle_factory = triangleSquare.TriangleFactory()
+        self.assertEqual(0, len(triangle_factory.triangles))
 
 
 if __name__ == '__main__':

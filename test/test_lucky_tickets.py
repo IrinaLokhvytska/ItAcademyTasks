@@ -9,13 +9,19 @@ class TestLuckyTickets(unittest.TestCase):
         self.assertEqual(result, expected)
 
     def test_check_tickets_value_positive(self):
-        expected = 50413
+        expected = 55252
         result = luckyTickets.check_tickets_value('0', '999999', 'Piter')
         self.assertEqual(result, expected)
 
     def test_check_Moskow_method(self):
-        expected = 50413
+        expected = 55252
         result = luckyTickets.check_tickets_value('0', '999999', 'Moskow')
+        self.assertEqual(result, expected)
+
+    def test_addZero(self):
+        expected = '000005'
+        tickets_class = luckyTickets.LuckyTickets('5', '10', 'Moskow')
+        result = tickets_class.addZero('5')
         self.assertEqual(result, expected)
 
 

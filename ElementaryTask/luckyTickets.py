@@ -21,7 +21,7 @@ class LuckyTickets:
         }
         for key, value in ticketsRange.items():
             if int(n) in range(value[0], value[1]):
-                n = str(n) + key
+                n = key + str(n)
         return n
 
     def __moskow_way(self):
